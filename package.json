@@ -7,12 +7,10 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@cap-js/sqlite": "^2.0.4",
     "@sap/cds": "^9.4.4",
     "@sap/cds-dk": "^9.4.3",
     "express": "^4"
-  },
-  "devDependencies": {
-    "@cap-js/sqlite": "^1"
   },
   "scripts": {
     "start": "cds-serve",
@@ -21,5 +19,17 @@
   },
   "imports": {
     "#cds-models/*": "./@cds-models/*/index.js"
+  },
+  "cds": {
+    "requires": {
+      "messaging": true,
+      "TodoService": {
+        "kind": "local",
+        "model": "srv/todolist-service"
+      },
+      "server": {
+        "port": 4005
+      }
+    }
   }
 }

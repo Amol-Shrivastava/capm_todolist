@@ -3,7 +3,7 @@ import cds from "@sap/cds/lib/index.js";
 export default class TodoService extends cds.ApplicationService {
   async init() {
     const { todolists, todolistItems } = this.entities;
-
+    const bus = await cds.connect.to("messaging");
     this.before("createList", async (req) => {
       debugger;
     });
@@ -77,7 +77,10 @@ export default class TodoService extends cds.ApplicationService {
         updatedAt: new Date().toISOString(),
       };
       await INSERT.into(todolistItems).entries(item);
-
+      await bus.emit("ItemCreated", {
+        todoListId,
+        itemId: item.todoListItemId,
+      });
       return {
         ...todo,
         items: item,

@@ -1,0 +1,38 @@
+POST http://localhost:4004/todos/createList
+Content-Type: application/json
+
+{
+    "todo": {
+        "todoListId"  : "abcd",
+        "title"       : "first todo",
+        "description" : "first todo",
+        "status"      : "Open",
+        "createdBy"   : "Amol",
+        "createdAt"   : "2025-11-11T14:33:43.810Z",
+        "updatedBy"   :  "Amol",
+        "updatedAt"   : "2025-11-11T14:33:43.810Z"
+    }
+}
+
+###
+
+POST http://localhost:4004/todos/todolists
+Content-Type: application/json
+
+{
+    "title": "test description",
+    "description": "test description"
+}
+
+###
+GET http://localhost:4004/todos/todolists('f0fb65f8-8f37-4c28-9b33-1a2e461a650a')?$expand=items
+
+###
+POST http://localhost:4004/todos/addItem
+Content-Type: application/json
+
+{
+  "todoListId": "f0fb65f8-8f37-4c28-9b33-1a2e461a650a",
+  "title": "item 4",
+  "description": "item 4"
+}

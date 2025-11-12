@@ -7,8 +7,8 @@ service TodoListService @(path: '/todos') {
     action createList(todo: todolists)                                     returns todolists;
     action addItem(todoListId: String, title: String, description: String) returns todolists;
 
-// event ItemCreated {
-//     todoListId : String;
-//     itemId     : String;
-// }
+    event ItemCreated {
+        todoListId : String;
+        itemId     : String;
+    }
 }

@@ -1,0 +1,68 @@
+
+CREATE TABLE productivityModule_StatusCatalog (
+  code NVARCHAR(50),
+  description NVARCHAR(255)
+);
+
+CREATE TABLE productivityModule_TodoListHdr (
+  ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP_TEXT,
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP_TEXT,
+  modifiedBy NVARCHAR(255),
+  title NVARCHAR(100),
+  description NVARCHAR(255),
+  PRIMARY KEY(ID)
+);
+
+CREATE TABLE productivityModule_TodoListItems (
+  ID NVARCHAR(36) NOT NULL,
+  createdAt TIMESTAMP_TEXT,
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP_TEXT,
+  modifiedBy NVARCHAR(255),
+  parent_ID NVARCHAR(36),
+  title NVARCHAR(200),
+  description NVARCHAR(400),
+  dueDate DATE_TEXT,
+  PRIMARY KEY(ID)
+);
+
+CREATE TABLE productivityModule_TodoListItems_texts (
+  locale NVARCHAR(14) NOT NULL,
+  ID NVARCHAR(36) NOT NULL,
+  title NVARCHAR(200),
+  description NVARCHAR(400),
+  PRIMARY KEY(locale, ID)
+);
+
+CREATE TABLE productivityModule_TodoListHdr_texts (
+  locale NVARCHAR(14) NOT NULL,
+  ID NVARCHAR(36) NOT NULL,
+  title NVARCHAR(100),
+  description NVARCHAR(255),
+  PRIMARY KEY(locale, ID)
+);
+
+CREATE VIEW localized_productivityModule_TodoListHdr AS SELECT
+  L_0.ID,
+  L_0.createdAt,
+  L_0.createdBy,
+  L_0.modifiedAt,
+  L_0.modifiedBy,
+  coalesce(localized_1.title, L_0.title) AS title,
+  coalesce(localized_1.description, L_0.description) AS description
+FROM (productivityModule_TodoListHdr AS L_0 LEFT JOIN productivityModule_TodoListHdr_texts AS localized_1 ON localized_1.ID = L_0.ID AND localized_1.locale = session_context( '$user.locale' ));
+
+CREATE VIEW localized_productivityModule_TodoListItems AS SELECT
+  L_0.ID,
+  L_0.createdAt,
+  L_0.createdBy,
+  L_0.modifiedAt,
+  L_0.modifiedBy,
+  L_0.parent_ID,
+  coalesce(localized_1.title, L_0.title) AS title,
+  coalesce(localized_1.description, L_0.description) AS description,
+  L_0.dueDate
+FROM (productivityModule_TodoListItems AS L_0 LEFT JOIN productivityModule_TodoListItems_texts AS localized_1 ON localized_1.ID = L_0.ID AND localized_1.locale = session_context( '$user.locale' ));
+

@@ -1,5 +1,3 @@
-using {productivityModule as prodMod} from '../db/schema';
-
-service NotificationService @(path: '/notify') {
+service NotificationService {
     action notifyUser(todoListId: String, itemId: String);
 }

@@ -1,14 +1,13 @@
-using {productivityModule as prodM} from '../db/schema';
+using {productivityModule as prodM} from '../db/schema.cds';
 
-service TodoListService @(path: '/todos') {
-    entity todolists     as projection on prodM.TodoList;
-    entity todolistItems as projection on prodM.TodoListItems;
+service TodoService {
+    entity Todolists     as projection on prodM.TodoListHdr
+        actions {
+            action createListItem(title: String, description: String, dueDate: Date) returns Todolists;
+        };
 
-    action createList(todo: todolists)                                     returns todolists;
-    action addItem(todoListId: String, title: String, description: String) returns todolists;
+    entity TodoListItems as projection on prodM.TodoListItems;
 
-    event ItemCreated {
-        todoListId : String;
-        itemId     : String;
-    }
+    action createList(title: String, description: String) returns Todolists;
+
 }

@@ -27,8 +27,8 @@
         "kind": "local",
         "model": "srv/todolist-service"
       },
-      "server": {
-        "port": 4005
+      "db": {
+        "kind": "sqlite"
       }
     }
   }
